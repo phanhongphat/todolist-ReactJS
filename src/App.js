@@ -4,6 +4,8 @@ import MainForm from './components/MainForm';
 import FormAdd from './components/FormAdd';
 import items from './components/items';
 
+ var uuidv4 = require('uuid/v4');
+
 class App extends Component {
 
   constructor (props) {
@@ -12,6 +14,30 @@ class App extends Component {
       tasks : items
     };
   }
+
+  componentWillMount(){                                   // save tasks in localStorage and take the ID(not change)
+    if (localStorage && localStorage.getItem('tasks')){       // != null
+        var tasks = JSON.parse(localStorage.getItem('tasks'));  
+        this.setState({
+            tasks : tasks 
+        });
+    }
+  }
+
+  handleSubmit = (task) => {      
+      var {tasks} = this.state;
+      tasks.push({
+          id : uuidv4(),
+          name : task.name,
+          level : task.level
+      });
+
+      this.setState({
+          tasks : tasks
+      });
+      localStorage.setItem('tasks' , JSON.stringify(tasks));
+  }
+
 
   render() {
 
@@ -67,7 +93,7 @@ class App extends Component {
     { /* <!-- CONTROL (SEARCH + SORT + ADD) : END --> */ }
     
     { /* <!-- FORM : START --> */ }
-      <FormAdd />
+      <FormAdd handleSubmit = { this.handleSubmit }/>
    { /* <!-- FORM : END --> */ }
 
     { /* <!-- LIST : START --> */ }

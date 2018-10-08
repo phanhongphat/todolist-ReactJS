@@ -24,8 +24,8 @@ class MainForm extends Component {
                     <td className="text-center">{index + 1}</td>
                     <td>{task.name}</td>
                     <td className="text-center">{
-                      task.level === 0 ? <span className="label label-danger">Small</span> : 
-                      task.level === 1 ? <span className="label label-danger">Medium</span> :
+                      task.level === 0 ? <span className="label label-default">Small</span> : 
+                      task.level === 1 ? <span className="label label-info">Medium</span> :
                         <span className="label label-danger">High</span> 
                       }</td>
                     <td>
