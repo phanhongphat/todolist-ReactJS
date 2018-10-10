@@ -3,6 +3,7 @@ import './App.css';
 import MainForm from './components/MainForm';
 import FormAdd from './components/FormAdd';
 import items from './components/items';
+import { remove } from 'lodash';
 
  var uuidv4 = require('uuid/v4');
 
@@ -24,7 +25,7 @@ class App extends Component {
     }
   }
 
-  handleSubmit = (task) => {      
+  onSubmit = (task) => {      
       var {tasks} = this.state;
       tasks.push({
           id : uuidv4(),
@@ -38,6 +39,16 @@ class App extends Component {
       localStorage.setItem('tasks' , JSON.stringify(tasks));
   }
 
+  onDelete = (id) =>{
+      let tasks  = this.state.tasks;
+      remove(tasks,(task) => {        // sử dụng lodash
+          return task.id === id;
+      });
+      this.setState({
+          tasks : tasks
+      });
+      localStorage.setItem('tasks' , JSON.stringify(tasks));
+  }
 
   render() {
 
@@ -93,12 +104,12 @@ class App extends Component {
     { /* <!-- CONTROL (SEARCH + SORT + ADD) : END --> */ }
     
     { /* <!-- FORM : START --> */ }
-      <FormAdd handleSubmit = { this.handleSubmit }/>
+      <FormAdd onSubmit = { this.onSubmit }/>
    { /* <!-- FORM : END --> */ }
 
     { /* <!-- LIST : START --> */ }
 
-      <MainForm tasks = { tasks }/>
+      <MainForm onDelete = {this.onDelete} tasks = { tasks }/>
 
   </div>
     );

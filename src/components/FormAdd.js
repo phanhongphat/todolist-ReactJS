@@ -25,14 +25,14 @@ class FormAdd extends Component {
       name : this.state.name,
       level: this.state.level
     };
-    this.props.handleSubmit(task);  
+    this.props.onSubmit(task);  
   }
 
   render() {
     return (
           <div className="row">
               <div className="col-md-offset-7 col-md-5">
-                <form handleSubmit = {this.handleSubmit} className="form-inline" >
+                <form  className="form-inline" >
 
                   <div className="form-group">
                     <label className="sr-only">label</label>
